@@ -53,8 +53,8 @@
 #define GPIO_PIN                                 18
 #define DMA                                      5
 
-#define WIDTH                                    8
-#define HEIGHT                                   8
+#define WIDTH                                    2
+#define HEIGHT                                   1
 #define LED_COUNT                                (WIDTH * HEIGHT)
 
 
@@ -68,7 +68,7 @@ ws2811_t ledstring =
         {
             .gpionum = GPIO_PIN,
             .count = LED_COUNT,
-            .invert = 0,
+            .invert = 1,
             .brightness = 255,
         },
         [1] =
@@ -141,6 +141,8 @@ void matrix_bottom(void)
 
 static void ctrl_c_handler(int signum)
 {
+    ledstring.channel[0].brightness = 0;
+    ws2811_render(&ledstring);
     ws2811_fini(&ledstring);
 }
 
@@ -151,7 +153,8 @@ static void setup_handlers(void)
         .sa_handler = ctrl_c_handler,
     };
 
-    sigaction(SIGKILL, &sa, NULL);
+    sigaction(SIGINT, &sa, NULL);
+    sigaction(SIGTERM, &sa, NULL);
 }
 
 int main(int argc, char *argv[])
@@ -178,7 +181,7 @@ int main(int argc, char *argv[])
         }
 
         // 15 frames /sec
-        usleep(1000000 / 15);
+        usleep(1000000 / 2);
     }
 
     ws2811_fini(&ledstring);
