@@ -113,14 +113,14 @@ void matrix_raise(void)
 int dotspos[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 ws2811_led_t dotcolors[] =
 {
-    0x200000,  // red
-    0x201000,  // orange
+    0x002000,  // red
+    0x102000,  // orange
     0x202000,  // yellow
-    0x002000,  // green
-    0x002020,  // lightblue
+    0x200000,  // green
+    0x200020,  // lightblue
     0x000020,  // blue
-    0x100010,  // purple
-    0x200010,  // pink
+    0x001010,  // purple
+    0x002010,  // pink
 };
 
 void matrix_bottom(void)
